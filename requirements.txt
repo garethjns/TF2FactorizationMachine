@@ -1,0 +1,6 @@
+tensorflow-gpu==2.0.0-beta1
+numpy
+pandas
+jupyter
+jupyterlab
+matplotlib
