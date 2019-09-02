@@ -195,4 +195,3 @@ class TestUsersItems(unittest.TestCase):
     @unittest.skip('Todo')
     def test_indexing_with_objects(self):
         pass
-

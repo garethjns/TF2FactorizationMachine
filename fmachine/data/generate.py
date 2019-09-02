@@ -163,9 +163,11 @@ class Users(IndexMap):
 
 class UsersItems:
     """Class to handle user-item matrix"""
-    def __init__(self, users: IndexMap, items: IndexMap) -> None:
-        self.users = users
-        self.items = items
+    def __init__(self, ratings_df) -> None:
+
+        u
+
+        self.ratings = ratings_df
 
         self._uim: SparseUIM = None
 
@@ -190,7 +192,7 @@ class UsersItems:
 
         return self._uim
 
-    def tocoords(self) -> Tuple[List[Tuple[Any, Tuple[int, int]]]]:
+    def tocoords(self) -> List[Tuple[Any, Tuple[int, int]]]:
         """Convert the users and items to coordinate tuples [(r1, (i1, j1)), (r2, (i2, j2)), ... ]"""
         coords = [(r, (uk, self.items[ik]))
                   for uk, uv in self.users.inverse().items() for ik, r in uv.ratings.items()]
