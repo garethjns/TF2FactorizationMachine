@@ -165,11 +165,12 @@ class UsersItems:
     """Class to handle user-item matrix"""
     def __init__(self, ratings_df) -> None:
 
-        u
+        self.user_map = IndexMap.create_from_iterable(ratings_df.user_id)
+        self.item_map = IndexMap.create_from_iterable(ratings_df.item_id)
+        ratings_df.loc[:, 'user_id'] = ratings_df.user_id.map(self.user_map)
+        ratings_df.loc[:, 'item_id'] = ratings_df.user_id.map(self.item_map)
 
-        self.ratings = ratings_df
-
-        self._uim: SparseUIM = None
+        self._uim = SparseUIM.create_from_coords(self.tocoords())
 
     def __repr__(self) -> str:
         return f"UsersItems({self.users}, {self.items})"
@@ -180,16 +181,6 @@ class UsersItems:
     @property
     def uim(self) -> SparseUIM:
         """The user-item matrix and SparseUIM"""
-        return self._uim
-
-    @uim.getter
-    def uim(self,
-            force: bool=False) -> SparseUIM:
-        """Get uim or set if not calculated yet."""
-
-        if (self._uim is None) or force:
-            self._uim = SparseUIM.create_from_coords(self.tocoords())
-
         return self._uim
 
     def tocoords(self) -> List[Tuple[Any, Tuple[int, int]]]:
